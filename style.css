@@ -1,0 +1,48 @@
+.wrapper {
+    position: relative;
+    width: 1000px;
+    height: auto;
+    margin: auto;
+    margin-top: 200px;
+    background-color: brown;
+    padding: 20px;
+}
+
+.list__li {
+    position: relative;
+    background-color:cornflowerblue;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 25px;
+}
+
+.input {
+    position: relative;
+    width: 400px;
+    height: 50px;
+    margin-left: 300px;
+    font-size: 30px;
+}
+
+.delete {
+    padding: 0;
+    width: 80px;
+    height: 80px;
+}
+
+.autocomplete__list {
+    width: 400px;
+    height: 50px;
+    background-color: aliceblue;
+    margin-left: 303px;
+    font-size: 30px;
+    overflow: hidden;
+}
+
+.autocomplete__list:hover {
+    background-color: aqua;
+}
