@@ -73,7 +73,7 @@ function constructor(name, owner, stars) {
             </p>
         </div>
             <button class='delete'>
-            <img src="/deleteButton.png" alt="Удалить" width="80" height="80">
+            <img src="https://comrety.github.io/ProjectDOM/deleteButton.png" alt="Удалить" width="80" height="80">
             </button>
         </div>
     </li>`)
