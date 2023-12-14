@@ -8,16 +8,52 @@ ul.addEventListener('click', function(e) {
     }
 })
 
+function constructor(array, id) {
+    ul.insertAdjacentHTML('beforeend', 
+    `<li class='list__li'>
+        <div>
+            <p class='par'>
+                <span class='parameters'>Name:</span>
+                <span id='parametersName'>${array[Number(id)].name}</span>
+            </p>
+            <p class='par'>
+                <span class='parameters'>Owner:</span>
+                <span id='parametersOwner'>${array[Number(id)].owner.login}</span>
+            </p>
+            <p class='par'>
+                <span class='parameters'>Stars:</span>
+                <span id='parametersStars'>${array[Number(id)].stargazers_count}</span>
+            </p>
+        </div>
+            <button class='delete'>
+            <img src="https://comrety.github.io/ProjectDOM/deleteButton.png" alt="Удалить" width="80" height="80">
+            </button>
+        </div>
+    </li>`)
+}
+
+function autoComplit(arr) {
+    for(let i = 0; i < arr.length; i++) {
+        auto.insertAdjacentHTML("beforeend", `<li class='autocomplete__list' data-id='${i}'>${arr[i].name}</li>`);
+        document.querySelector(`[data-id="${i}"]`).onclick = function() {
+            constructor(arr, this.dataset.id);
+            input.value = '';
+            document.querySelectorAll('.autocomplete__list').forEach(elem => elem.remove());
+            document.querySelectorAll('.autocomplete__list').forEach(el => el.removeEventListener('click', mop))
+        }
+    }
+}
+
 function debounce(fn, ms) {
     let timeout;
 
     return function() {
-        if(input.value === '' || input.value === ' ') {
-            auto.innerHTML = '';
-        }
         const fnCall = () => {
-            if(input.value !== '' && input.value !== ' ') {
+            let trim = input.value.trim();
+            if(trim.length > 0) {
                 fn.apply(this, arguments)
+            } else {
+                input.value = '';
             }
         };
 
@@ -54,41 +90,3 @@ function autocomplit(e) {
 autocomplit = debounce(autocomplit, 500);
 
 document.querySelector('input').addEventListener('keyup', autocomplit);
-
-function constructor(name, owner, stars) {
-    ul.insertAdjacentHTML('beforeend', 
-    `<li class='list__li'>
-        <div>
-            <p class='par'>
-                <span class='parameters'>Name:</span>
-                <span id='parametersName'>${name}</span>
-            </p>
-            <p class='par'>
-                <span class='parameters'>Owner:</span>
-                <span id='parametersOwner'>${owner}</span>
-            </p>
-            <p class='par'>
-                <span class='parameters'>Stars:</span>
-                <span id='parametersStars'>${stars}</span>
-            </p>
-        </div>
-            <button class='delete'>
-            <img src="https://comrety.github.io/ProjectDOM/deleteButton.png" alt="Удалить" width="80" height="80">
-            </button>
-        </div>
-    </li>`)
-}
-
-function autoComplit(arr) {
-    auto.innerHTML = '';
-    for(let i = 0; i < arr.length; i++) {
-        auto.insertAdjacentHTML("beforeend", `<li class='autocomplete__list' id='${i}'>${arr[i].name}</li>`);  
-    }
-    auto.addEventListener('click', function(e) {
-        if(e.target.tagName === 'LI'){
-            const append = e.target.closest('.autocomplete__list');
-            const id = Number(append.id);
-            constructor(arr[id].name, arr[id].owner.login, arr[id].stargazers_count);
-        }
-    })
-}
