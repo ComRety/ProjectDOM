@@ -33,6 +33,7 @@ function constructor(array, id) {
 }
 
 function autoComplit(arr) {
+    auto.innerHTML = '';
     for(let i = 0; i < arr.length; i++) {
         auto.insertAdjacentHTML("beforeend", `<li class='autocomplete__list' data-id='${i}'>${arr[i].name}</li>`);
         document.querySelector(`[data-id="${i}"]`).onclick = function() {
@@ -53,6 +54,7 @@ function debounce(fn, ms) {
             if(trim.length > 0) {
                 fn.apply(this, arguments)
             } else {
+                auto.innerHTML = '';
                 input.value = '';
             }
         };
@@ -65,24 +67,17 @@ function debounce(fn, ms) {
 
 
 function autocomplit(e) {
-    fetch(`https://api.github.com/search/repositories?q=${e.target.value}`)
+    fetch(`https://api.github.com/search/repositories?q=${e.target.value};per_page=5`)
     .then(response => {
         return response.json();
     })
     .then(el => {
-        if(el.total_count >= 5) {
-            let array = [];
-            for(let i = 0; i < 5; i++) {
-                array.push(el.items[i]);
-            }
-            autoComplit(array);
-        } else if (el.total_count < 5) {
-            let array = [];
-            for(let i of el.items) {
-                array.push(i);
-            }
-            autoComplit(array);
-        }
+        console.log(el)
+        let array = [];
+        for(let i of el.items) {
+            array.push(i);
+        } 
+        autoComplit(array);
     })
     .catch(error => console.log(error));
 }
